@@ -1,0 +1,19 @@
+body {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#RWD {
+  width: 1500px;
+  @media screen and (max-widht: 1200px) {
+    #RWD {
+      width: 45%;
+    }
+  }
+  @media screen and (max-widht: 500px) {
+    #RWD {
+      width: 90%;
+    }
+  }
+}
