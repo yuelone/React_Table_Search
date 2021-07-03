@@ -1,3 +1,5 @@
+$table_boder: 1px solid black;
+
 body {
   display: flex;
   justify-content: center;
@@ -16,4 +18,20 @@ body {
       width: 90%;
     }
   }
+}
+
+.table {
+  border: $table_boder;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.th {
+  border: $table_boder;
+  text-align: left;
+}
+
+.td {
+  border: $table_boder;
+  text-align: left;
 }

@@ -12,9 +12,13 @@ const SearchTable = () => {
   const API_HOST_STORY_PAGE = `${API_HOST_STORY}&hitsPerPage=${pageNumber}`;
 
   async function loadStory() {
-    const res = await fetch(API_HOST_STORY_PAGE);
-    const data = await res.json();
-    setStory((predata) => [...predata, ...data.hits]);
+    try {
+      const res = await fetch(API_HOST_STORY_PAGE);
+      const data = await res.json();
+      setStory((predata) => [...predata, ...data.hits]);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   useEffect(() => {
@@ -28,11 +32,11 @@ const SearchTable = () => {
   useEffect(() => {
     setFilterStory(
       story.filter(
-        (txt) =>(
+        (txt) =>
           txt.objectID.toLowerCase().includes(search.toLowerCase()) ||
           txt.author.toLowerCase().includes(search.toLowerCase()) ||
           txt.title.toLowerCase().includes(search.toLowerCase())
-      ))
+      )
     );
   }, [search, story]);
 
@@ -46,32 +50,32 @@ const SearchTable = () => {
         onChange={(e) => setSearch(e.target.value)}
       />
       <p></p>
-      <table border="1">
+      <table className={`${styles.table}`}>
         <thead>
-          <tr align="left">
-            <th>ID</th>
-            <th>Author</th>
-            <th>Comments</th>
-            <th>Title</th>
-            <th>URL</th>
-            <th>Remore</th>
+          <tr>
+            <th className={`${styles.th}`}>ID</th>
+            <th className={`${styles.th}`}>Author</th>
+            <th className={`${styles.th}`}>Comments</th>
+            <th className={`${styles.th}`}>Title</th>
+            <th className={`${styles.th}`}>URL</th>
+            <th className={`${styles.th}`}>Remore</th>
           </tr>
         </thead>
         <tbody>
           {filterStory.map((storyitem) => (
-            <tr align="left" key={v4()}>
-              <th>{storyitem.objectID}</th>
-              <th>{storyitem.author}</th>
-              <th>{storyitem.num_comments}</th>
-              <th>{storyitem.title}</th>
-              <th>
+            <tr key={v4()}>
+              <td className={`${styles.td}`}>{storyitem.objectID}</td>
+              <td className={`${styles.td}`}>{storyitem.author}</td>
+              <td className={`${styles.td}`}>{storyitem.num_comments}</td>
+              <td className={`${styles.td}`}>{storyitem.title}</td>
+              <td className={`${styles.td}`}>
                 {storyitem.url === "" || storyitem.url === null ? (
                   <div>Sorry here not have url</div>
                 ) : (
                   <a href={storyitem.url}>{storyitem.url}</a>
                 )}
-              </th>
-              <th>
+              </td>
+              <td className={`${styles.td}`}>
                 <input
                   type="button"
                   value="delate"
@@ -79,13 +83,13 @@ const SearchTable = () => {
                     {
                       setStory(
                         filterStory.filter(
-                          (row) => (row.objectID !== storyitem.objectID)
+                          (row) => row.objectID !== storyitem.objectID
                         )
                       );
                     }
                   }}
                 />
-              </th>
+              </td>
             </tr>
           ))}
         </tbody>
